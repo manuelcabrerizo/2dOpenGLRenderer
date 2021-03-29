@@ -235,4 +235,6 @@ void win32_render()
             }
         }
     }
+}
+
 
