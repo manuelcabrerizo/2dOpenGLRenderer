@@ -21,13 +21,14 @@ struct Animation
     float speed = 20.0f;
 };
 
-
 struct World
 {
-    Vec2 world;
+    Vec2 tile_map;
     Vec2 tile;
     Vec2 pos;
     Vec2 tile_size;
+    uint32_t tile_map_count_x = 2;
+    uint32_t tile_map_count_y = 2;
 };
 
 struct Tile_Map
