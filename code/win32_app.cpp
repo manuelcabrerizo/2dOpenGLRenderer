@@ -73,8 +73,8 @@ void win32_start()
 
     world.tile_size.x = 64.0f;
     world.tile_size.y = 64.0f;
-    world.tile_map.x     = 0.0f;
-    world.tile_map.y     = 0.0f;
+    world.tile_map.x  = 0.0f;
+    world.tile_map.y  = 0.0f;
     world.pos.x       = 2.0f * world.tile_size.x;  
     world.pos.y       = 2.0f * world.tile_size.y;
     world.tile.x      = world.pos.x / world.tile_size.x;
@@ -143,33 +143,7 @@ bool check_world_tile_empty_test(World world, Tile_Map* tile_map, float test_x, 
 
 void win32_update(float delta_time)
 {
-
-    world.tile.x = (int32_t)floorf((world.pos.x + (player_size/2.0f)) / world.tile_size.x);
-    world.tile.y = (int32_t)floorf((world.pos.y + (player_size/2.0f)) / world.tile_size.y);
-
-    if(world.tile.x < 0)
-    {
-        world.tile_map.x -= 1.0f;
-        world.pos.x += map.tile_count_x * player_size; 
-    }
-    if(world.tile.x >= map.tile_count_x)
-    {
-        world.tile_map.x += 1.0f;
-        world.pos.x -= map.tile_count_x * player_size;
-    }
-    if(world.tile.y < 0)
-    {
-        world.tile_map.y += 1.0f;
-        world.pos.y += map.tile_count_y * player_size; 
-    }
-    if(world.tile.y >= map.tile_count_y)
-    {
-        world.tile_map.y -= 1.0f;
-        world.pos.y -= map.tile_count_y * player_size;
-    }
-
     animation.num_frames = 1;
-
     Vec2 player_new_position = world.pos;
 
     Input* input = get_input();
@@ -204,6 +178,31 @@ void win32_update(float delta_time)
        check_world_tile_empty_test(world, &map, player_new_position.x + 0.6f*player_size, player_new_position.y + 0.6*player_size))
     {
         world.pos = player_new_position;
+    }
+
+
+    world.tile.x = (int32_t)floorf((world.pos.x + (player_size/2.0f)) / world.tile_size.x);
+    world.tile.y = (int32_t)floorf((world.pos.y + (player_size/2.0f)) / world.tile_size.y);
+
+    if(world.tile.x < 0)
+    {
+        world.tile_map.x -= 1.0f;
+        world.pos.x += map.tile_count_x * player_size; 
+    }
+    if(world.tile.x >= map.tile_count_x)
+    {
+        world.tile_map.x += 1.0f;
+        world.pos.x -= map.tile_count_x * player_size;
+    }
+    if(world.tile.y < 0)
+    {
+        world.tile_map.y += 1.0f;
+        world.pos.y += map.tile_count_y * player_size; 
+    }
+    if(world.tile.y >= map.tile_count_y)
+    {
+        world.tile_map.y -= 1.0f;
+        world.pos.y -= map.tile_count_y * player_size;
     }
 
     static float time = 0;

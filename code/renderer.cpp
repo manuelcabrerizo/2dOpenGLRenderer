@@ -90,7 +90,7 @@ void draw_rect_color(int x, int y, int width, int height, Vec3 color)
 {
     glUniform1i(shaders.main_shader.has_color, 1);
     glUniform3f(shaders.main_shader.color_location, color.x, color.y, color.z);
-    Matrix model = get_scale_matrix({(float)width, (float)height, 1.0f}) * get_translation_matrix({(float)x + (width/2.0f), (float)y + (height/2.0f), 0.0f});
+    Matrix model = get_scale_matrix({(float)width, (float)height, 1.0f}) * get_translation_matrix({(float)x, (float)y, 0.0f});
     glUniformMatrix4fv(shaders.main_shader.world_location, 1, GL_FALSE, model.m[0]);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
@@ -100,7 +100,7 @@ void draw_rect_texture(int x, int y, int width, int height, std::string id)
     glUniform1i(shaders.main_shader.has_color, 0);
     Texture* texture = get_texture(id); 
     glBindTexture(GL_TEXTURE_2D, texture->id);
-    Matrix model = get_scale_matrix({(float)width, (float)height, 1.0f}) * get_translation_matrix({(float)x + (width/2.0f), (float)y + (height/2.0f), 0.0f});
+    Matrix model = get_scale_matrix({(float)width, (float)height, 1.0f}) * get_translation_matrix({(float)x, (float)y, 0.0f});
     glUniformMatrix4fv(shaders.main_shader.world_location, 1, GL_FALSE, model.m[0]);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
@@ -109,7 +109,7 @@ void draw_tilesheet_tile(int x, int y, int width, int height, uint32_t tex_id)
 {
     glUniform1i(shaders.main_shader.has_color, 0);
     glBindTexture(GL_TEXTURE_2D, tex_id);
-    Matrix model = get_scale_matrix({(float)width, (float)height, 1.0f}) * get_translation_matrix({(float)x + (width/2.0f), (float)y + (height/2.0f), 0.0f});
+    Matrix model = get_scale_matrix({(float)width, (float)height, 1.0f}) * get_translation_matrix({(float)x, (float)y, 0.0f});
     glUniformMatrix4fv(shaders.main_shader.world_location, 1, GL_FALSE, model.m[0]);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
