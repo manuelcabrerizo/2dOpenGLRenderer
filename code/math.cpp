@@ -6,6 +6,24 @@ float to_radiant(float v)
     return v * PI / 180.0f;
 }
 
+float absf(float f)
+{
+    float result = f;
+    if(f < 0)
+    {
+        result = -f;
+    }
+    return result;
+}
+
+Vec2 vec2_rotate(Vec2 v, float angle)
+{
+    Vec2 rotatedVector;
+        rotatedVector.x = v.x * cosf(angle) - v.y * sinf(angle);
+        rotatedVector.y = v.x * sinf(angle) + v.y * cosf(angle); 
+    return rotatedVector;
+}
+
 Vec3 vec3_rotate_y(Vec3 v, float angle)
 {
     Vec3 rotatedVector;
@@ -214,6 +232,15 @@ Vec3 normaliza_vec3(Vec3 v)
     result.x = v.x / lenght;
     result.y = v.y / lenght;
     result.z = v.z / lenght;
+    return result;
+}
+
+Vec2 normaliza_vec2(Vec2 v)
+{
+    Vec2 result;
+    float lenght = vec2_length(v);
+    result.x = v.x / lenght;
+    result.y = v.y / lenght;
     return result;
 }
 

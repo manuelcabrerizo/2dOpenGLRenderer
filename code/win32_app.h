@@ -21,14 +21,21 @@ struct Animation
     float speed = 20.0f;
 };
 
-struct World
+struct Fireball
 {
-    Vec2 tile_map;
-    Vec2 tile;
-    Vec2 pos;
-    Vec2 tile_size;
-    uint32_t tile_map_count_x = 2;
-    uint32_t tile_map_count_y = 2;
+    Vec2 position;
+    Vec2 direction;
+    float speed;
+    Animation animation;
+};
+
+struct Enemy 
+{
+    float shoot_speed;
+    int tile_map_x;
+    int tile_map_y;
+    Vec2 position;
+    Fireball fireball;
 };
 
 struct Tile_Map
@@ -36,6 +43,21 @@ struct Tile_Map
     uint32_t tile_count_x = 16;
     uint32_t tile_count_y = 9;
     uint32_t* tiles[4];
+};
+
+
+struct World
+{
+    Tile_Map map;
+    Vec2 tile_map;
+    Vec2 tile;
+    Vec2 pos;
+    Vec2 dir;
+    Vec2 tile_size;
+    uint32_t tile_map_count_x = 2;
+    uint32_t tile_map_count_y = 2;
+    Enemy* enemies;
+    int num_enemy;
 };
 
 void win32_start();

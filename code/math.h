@@ -23,6 +23,10 @@ struct Matrix
     float m[4][4];
 };
 
+
+float absf(float f);
+
+Vec2 vec2_rotate(Vec2 v, float angle);
 Vec3 vec3_rotate_y(Vec3 v, float angle);
 
 float to_radiant(float v);
@@ -54,6 +58,8 @@ float vec3_length(Vec3 v);
 float vec3_dot(Vec3 v0, Vec3 v1);
 Vec3 vec3_cross(Vec3 a, Vec3 b);
 Vec3 normaliza_vec3(Vec3 v);
+Vec2 normaliza_vec2(Vec2 v);
+
 
 Matrix get_identity_matrix();
 Matrix matrix_transpose(Matrix m);
