@@ -31,6 +31,7 @@ struct Animation
 
 struct Fireball
 {
+    Vec2 start_position;
     Vec2 position;
     Vec2 direction;
     float speed;

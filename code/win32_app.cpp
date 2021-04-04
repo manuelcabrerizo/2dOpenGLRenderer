@@ -138,7 +138,7 @@ void win32_start()
     {
         world.fireballs[i].position = world.pos;
         world.fireballs[i].direction = world.dir;
-        world.fireballs[i].speed = 300;
+        world.fireballs[i].speed = 500;
         world.fireballs[i].animation = spell_animation;
         world.fireballs[i].should_render = false;
     }
@@ -248,20 +248,22 @@ void process_enemy_fireball(Enemy* enemy, Vec2 player_pos, float time, float del
 void process_player_spell(Fireball* fireball, Vec2 player_pos, float time, float delta_time)
 {
     fireball->animation.col = (int)((int)(time * fireball->animation.speed) % fireball->animation.num_frames);
-    if(absf(vec2_length(player_pos - fireball->position)) > 300)
+    if(absf(vec2_length(fireball->start_position - fireball->position)) > 300)
     {
         fireball->should_render = false; 
     }
-    //if(fireball->should_render == true)
-    {
-        fireball->position = fireball->position + (fireball->direction * fireball->speed) * delta_time;
-    }
+    fireball->position = fireball->position + (fireball->direction * fireball->speed) * delta_time;
+    
 }
 
-void shoot_spell(Fireball* fireball, Vec2 player_pos)
+void shoot_spell(Fireball* fireball, Vec2 player_pos, Vec2 player_dir)
 {
     if(fireball->should_render == false)
+    {
+        fireball->start_position = player_pos;
+        fireball->direction = player_dir;
         fireball->position = player_pos;
+    }
     fireball->should_render = true;
 }
 
@@ -277,17 +279,14 @@ void win32_update(float delta_time)
     bool right = key_down('D'     , input);
     bool space = key_down(VK_SPACE, input);
 
-    if(space)
-    {
-        shoot_spell(&world.fireballs[0], world.pos);
-    }
-
+    Vec2 spell_dir;
     if(up && !left && !right && !down)
     {
         Vec2 new_dir = vec2_rotate(world.dir, to_radiant(90));
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 0;
         animation.num_frames = 6;
+        spell_dir = new_dir;
     }
     else if(down && !left && !right && !up)
     {
@@ -295,6 +294,7 @@ void win32_update(float delta_time)
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 1;
         animation.num_frames = 6;
+        spell_dir = new_dir;
     }
     else if(left && !up && !down && !right)
     {
@@ -302,6 +302,7 @@ void win32_update(float delta_time)
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 3;
         animation.num_frames = 6;
+        spell_dir = new_dir;
     }
     else if(right && !up && !down && !left)
     {
@@ -309,6 +310,7 @@ void win32_update(float delta_time)
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 2;
         animation.num_frames = 6;
+        spell_dir = new_dir;
     }
     else if(right && up && !left && !down)
     {
@@ -316,13 +318,15 @@ void win32_update(float delta_time)
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 2;
         animation.num_frames = 6;
+        spell_dir = new_dir;
     }
     else if(left && up && !right && !down)
     {
         Vec2 new_dir = vec2_rotate(world.dir, to_radiant(135));
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 3;
-        animation.num_frames = 6;   
+        animation.num_frames = 6; 
+        spell_dir = new_dir;
     }
     else if(right && down && !left && !up)
     {
@@ -330,13 +334,20 @@ void win32_update(float delta_time)
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 2;
         animation.num_frames = 6; 
+        spell_dir = new_dir;
     }
     else if(left && down && !right && !up)
     {
         Vec2 new_dir = vec2_rotate(world.dir, to_radiant(225));
         player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
         animation.row = 3;
-        animation.num_frames = 6;    
+        animation.num_frames = 6;
+        spell_dir = new_dir;
+    }
+
+    if(space)
+    {
+        shoot_spell(&world.fireballs[0], world.pos, spell_dir);
     }
 
     if(check_world_tile_empty_test(world, player_new_position.x + 0.4f*player_size, player_new_position.y) &&
@@ -409,7 +420,7 @@ void win32_render()
 
     for(int i = 0; i < world.num_fireballs; i++)
     {
-        //if(world.fireballs[i].should_render == true)
+        if(world.fireballs[i].should_render == true)
         {
             draw_tilesheet_tile(world.fireballs[i].position.x, 
                             world.fireballs[i].position.y,
