@@ -8,6 +8,14 @@
 
 #include <vector>
 
+
+enum Game_State
+{
+    INIT_STATE,
+    MENU_STATE,
+    PLAY_STATE
+};
+
 struct Game
 {
     static Entity_Manager manager;
@@ -27,6 +35,7 @@ struct Fireball
     Vec2 direction;
     float speed;
     Animation animation;
+    bool should_render = true;
 };
 
 struct Enemy 
@@ -53,6 +62,8 @@ struct World
     Vec2 tile;
     Vec2 pos;
     Vec2 dir;
+    Fireball fireballs[2];
+    int num_fireballs = 2;
     Vec2 tile_size;
     uint32_t tile_map_count_x = 2;
     uint32_t tile_map_count_y = 2;

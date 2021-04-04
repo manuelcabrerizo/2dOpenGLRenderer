@@ -21,11 +21,11 @@ uint32_t tile_map00[144] = {
 uint32_t tile_map01[144] = {
     1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
+    0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
@@ -57,6 +57,7 @@ uint32_t tile_map11[144] = {
 global_variable int player_speed = 200;
 global_variable float player_size = 64.0f;
 global_variable Animation animation;
+
 global_variable World world;
 
 void initialize_enemies(World* world)
@@ -132,6 +133,15 @@ void win32_start()
     world.dir       = {1.0f, 0.0f};
     world.tile      = {world.pos.x / world.tile_size.x, world.pos.y / world.tile_size.y};
 
+    Animation spell_animation = {3, 0, 6, 10.0f}; 
+    for(int i = 0; i < world.num_fireballs; i++)
+    {
+        world.fireballs[i].position = world.pos;
+        world.fireballs[i].direction = world.dir;
+        world.fireballs[i].speed = 300;
+        world.fireballs[i].animation = spell_animation;
+        world.fireballs[i].should_render = false;
+    }
     initialize_enemies(&world);
 }
 
@@ -235,16 +245,42 @@ void process_enemy_fireball(Enemy* enemy, Vec2 player_pos, float time, float del
     }
 }
 
+void process_player_spell(Fireball* fireball, Vec2 player_pos, float time, float delta_time)
+{
+    fireball->animation.col = (int)((int)(time * fireball->animation.speed) % fireball->animation.num_frames);
+    if(absf(vec2_length(player_pos - fireball->position)) > 300)
+    {
+        fireball->should_render = false; 
+    }
+    //if(fireball->should_render == true)
+    {
+        fireball->position = fireball->position + (fireball->direction * fireball->speed) * delta_time;
+    }
+}
+
+void shoot_spell(Fireball* fireball, Vec2 player_pos)
+{
+    if(fireball->should_render == false)
+        fireball->position = player_pos;
+    fireball->should_render = true;
+}
+
 void win32_update(float delta_time)
 {
     animation.num_frames = 1;
     Vec2 player_new_position = world.pos;
 
     Input* input = get_input();
-    bool up    = key_down('W', input);
-    bool down  = key_down('S', input);
-    bool left  = key_down('A', input);
-    bool right = key_down('D', input);
+    bool up    = key_down('W'     , input);
+    bool down  = key_down('S'     , input);
+    bool left  = key_down('A'     , input);
+    bool right = key_down('D'     , input);
+    bool space = key_down(VK_SPACE, input);
+
+    if(space)
+    {
+        shoot_spell(&world.fireballs[0], world.pos);
+    }
 
     if(up && !left && !right && !down)
     {
@@ -349,6 +385,11 @@ void win32_update(float delta_time)
             process_enemy_fireball(enemy, world.pos, time, delta_time);
         }
     }
+
+    for(int i = 0; i < world.num_fireballs; i++)
+    {
+        process_player_spell(&world.fireballs[i], world.pos, time, delta_time);
+    }
 }
 
 void win32_render()
@@ -360,9 +401,20 @@ void win32_render()
         {
             draw_tilesheet_tile(world.enemies[i].fireball.position.x,
                                 world.enemies[i].fireball.position.y,
-                                64, 64,
+                                48, 48,
                                 fireball_textures[(world.enemies[i].fireball.animation.row * 6) + world.enemies[i].fireball.animation.col]);
             draw_rect_texture(world.enemies[i].position.x, world.enemies[i].position.y, 64, 64, "enemy");
+        }
+    }
+
+    for(int i = 0; i < world.num_fireballs; i++)
+    {
+        //if(world.fireballs[i].should_render == true)
+        {
+            draw_tilesheet_tile(world.fireballs[i].position.x, 
+                            world.fireballs[i].position.y,
+                            48, 48, 
+                            fireball_textures[(world.fireballs[i].animation.row * 6) + world.fireballs[i].animation.col]);
         }
     }
 
