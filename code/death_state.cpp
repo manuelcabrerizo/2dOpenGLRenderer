@@ -9,8 +9,8 @@ void death_state_start(Game_State* state)
 {
     add_texture("menu-button-0", "./data/menu_button.bmp", false);
     add_texture("menu-button-1", "./data/menu_button_selected.bmp", false);
+    add_texture("death_back", "./data/death_background.bmp", false);
     death_menu.option_selected = 0;
-    set_immune_shader_filter(1);
 }
 
 void death_state_update(float delta_time, Game_State* state)
@@ -21,15 +21,15 @@ void death_state_update(float delta_time, Game_State* state)
         if(death_menu.option_selected == 1)
         {
             play_state_restart();
-            death_menu.option_selected = 0;
             set_immune_shader_filter(0);
+            death_menu.option_selected = 0;
             *state = PLAY_STATE;
         }
         
         if(death_menu.option_selected == 2)
         {
-            death_menu.option_selected = 0;
             set_immune_shader_filter(0);
+            death_menu.option_selected = 0;
             *state = MENU_STATE;
         }
 
@@ -57,7 +57,6 @@ void death_state_update(float delta_time, Game_State* state)
     {
         s_was_press = false;
     }
-
 }
 
 void death_state_render()
@@ -70,4 +69,7 @@ void death_state_render()
         draw_rect_texture((WNDWIDTH / 2) - 32*4, 32*4, 64*4, 32*4, "menu-button-1");
     else
         draw_rect_texture((WNDWIDTH / 2) - 32*4, 32*4, 64*4, 32*4, "menu-button-0");
+
+    draw_rect_texture(0, 0, 320 * 4, 180 * 4, "death_back");
+
 }

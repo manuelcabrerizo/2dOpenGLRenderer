@@ -6,12 +6,61 @@ std::vector<uint32_t> tile_map_textures;
 std::vector<uint32_t> fireball_textures;
 std::vector<uint32_t> spell_textures;
 
+uint32_t tile_map00_textures[144] = {
+    21, 21, 21, 21, 21, 21, 21, 24, 26, 21, 21, 21, 21, 21, 21, 21,
+    21, 18, 19, 19, 19, 20, 21, 24, 26, 21, 18, 19, 19, 19, 20, 21,
+    21, 24, 25, 25, 25, 26, 21, 24, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 30, 31, 25, 31, 32, 21, 24, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 21, 21, 25, 21, 21, 21, 24, 26, 21, 24, 25, 25, 25, 25, 25,
+    21, 18, 19, 25, 19, 19, 19, 34, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 24, 25, 25, 25, 25, 25, 25, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 30, 31, 31, 31, 31, 31, 31, 32, 21, 30, 31, 31, 31, 32, 21,
+    21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21
+};
+
+uint32_t tile_map01_textures[144] = {
+    21, 21, 21, 21, 21, 21, 21, 24, 26, 21, 21, 21, 21, 21, 21, 21,
+    21, 18, 19, 19, 19, 19, 19, 25, 25, 19, 19, 19, 19, 19, 20, 21,
+    21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
+    21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
+    25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
+    21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
+    21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
+    21, 30, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 32, 21,
+    21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21
+};
+
+uint32_t tile_map10_textures[144] = {
+    3,  3,  3,  3,  3,  3,  3, 3, 3,  3,  3,  3,  3,  3,  3, 3,
+    3,  0,  1,  1,  1,  1,  1, 1, 1,  1,  1,  1,  1,  1,  2, 3,
+    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
+    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
+    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  7, 7,
+    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
+    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
+    3, 12, 13, 13, 13, 13, 13, 7, 7, 13, 13, 13, 13, 13, 14, 3,
+    3,  3,  3,  3,  3,  3,  3, 7, 7,  3,  3,  3,  3,  3,  3, 3
+};
+
+uint32_t tile_map11_textures[144] = {
+    3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3, 3,
+    3,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  2, 3,
+    3,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
+    3,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
+    7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
+    3,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
+    3,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
+    3, 12, 13, 13, 13, 13, 13,  7,  7, 13, 13, 13, 13, 13, 14, 3,
+    3,  3,  3,  3,  3,  3,  3,  7,  7,  3,  3,  3,  3,  3,  3, 3
+};
+
+
 uint32_t tile_map00[144] = {
     1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
@@ -128,13 +177,18 @@ void play_state_start(Game_State* state)
     fireball_textures = load_tilesheet("fireball", 6, 4, 8); 
     add_texture("mago", "./data/mago.bmp", true);
     mago_aminations = load_tilesheet("mago", 6, 5, 16);
-    add_texture("map", "./data/tilesheet.bmp", true);
+    add_texture("map", "./data/new_tilesheet.bmp", true);
     tile_map_textures = load_tilesheet("map", 6, 6, 16);
 
     world.map.tiles[0] = tile_map00;
     world.map.tiles[1] = tile_map01;
     world.map.tiles[2] = tile_map10;
     world.map.tiles[3] = tile_map11;
+
+    world.map.tiles_textures[0] = tile_map00_textures;
+    world.map.tiles_textures[1] = tile_map01_textures;
+    world.map.tiles_textures[2] = tile_map10_textures;
+    world.map.tiles_textures[3] = tile_map11_textures;
 
     world.tile_size = {80.0f, 80.0f};
     world.tile_map  = {0.0f, 0.0f};
@@ -186,6 +240,18 @@ bool aabb_colition_check(float x0, float y0, float width0, float height0,
     {
         return false;
     }
+}
+
+uint32_t* get_tiles_texture(World, uint32_t x, uint32_t y)
+{
+    uint32_t* tiles = 0;
+    if((x >= 0) && (x < world.tile_map_count_x) &&
+       (y >= 0) && (y < world.tile_map_count_y))
+    {
+        tiles = world.map.tiles_textures[(y * world.tile_map_count_x) + x];
+    }
+    return tiles;
+
 }
 
 uint32_t* get_tiles(World world, uint32_t x, uint32_t y)
@@ -582,17 +648,10 @@ void play_state_render()
     {
         for(int x = 0; x < world.map.tile_count_x; x++)
         {
-            uint32_t* tiles = get_tiles(world, (uint32_t)world.tile_map.x, (uint32_t)world.tile_map.y);
+            uint32_t* tiles = get_tiles_texture(world, (uint32_t)world.tile_map.x, (uint32_t)world.tile_map.y);
             if(tiles)
             {
-                if(tiles[(y*world.map.tile_count_x)+x] != 1)
-                {
-                    tile_texture = 35;
-                }
-                else if(tiles[(y*world.map.tile_count_x)+x] == 1)
-                {
-                    tile_texture = 18;
-                }
+                tile_texture = tiles[(y*world.map.tile_count_x)+x];
                 draw_tilesheet_tile(x * world.tile_size.x, y * world.tile_size.y, world.tile_size.x, world.tile_size.y, tile_map_textures[tile_texture]);
             }
         }

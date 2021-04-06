@@ -23,7 +23,7 @@ void main()
     }
     if(immune == 1)
     {
-        FragColor = mix(objectColor, red, 0.2);
+        FragColor = mix(objectColor, red, 0.5);
     }
     else
     {

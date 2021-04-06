@@ -31,6 +31,7 @@ struct Tile_Map
     uint32_t tile_count_x = 16;
     uint32_t tile_count_y = 9;
     uint32_t* tiles[4];
+    uint32_t* tiles_textures[4];
 };
 
 

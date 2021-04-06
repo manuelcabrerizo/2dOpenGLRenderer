@@ -11,6 +11,7 @@ void menu_state_start(Game_State* state)
     add_texture("button-1", "./data/play_button_selected.bmp", false);
     add_texture("button-exit-0", "./data/exit_button.bmp", false);
     add_texture("button-exit-1", "./data/exit_button_selected.bmp", false);
+    add_texture("background", "./data/menu_background.bmp", false);
     main_menu.option_selected = 0;
 }
 
@@ -69,4 +70,6 @@ void menu_state_render()
         draw_rect_texture((WNDWIDTH / 2) - 32*4, 32*4, 64*4, 32*4, "button-exit-1");
     else
         draw_rect_texture((WNDWIDTH / 2) - 32*4, 32*4, 64*4, 32*4, "button-exit-0");
+
+    draw_rect_texture(0, 0, 320 * 4, 180 * 4, "background");
 }
