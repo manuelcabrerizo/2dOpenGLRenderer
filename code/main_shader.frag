@@ -5,11 +5,13 @@ in vec2 TexCoord;
 
 uniform sampler2D texture1;
 uniform int has_color;
+uniform int immune;
 uniform vec3 color;
 
 void main()
 {
     vec4 objectColor;
+    vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
     if(has_color == 0)
     {
         objectColor = texture(texture1, TexCoord).xyzw; 
@@ -19,5 +21,12 @@ void main()
     {
         objectColor = vec4(color, 1.0);
     }
-    FragColor = objectColor;
+    if(immune == 1)
+    {
+        FragColor = mix(objectColor, red, 0.2);
+    }
+    else
+    {
+        FragColor = objectColor;
+    }
 }

@@ -40,6 +40,11 @@ Input* get_input()
     return &platform.input;
 }
 
+bool* get_app_running()
+{
+    return &platform.app_running;
+}
+
 Win32_Platform* win32_init_window(HINSTANCE h_instance)
 {
     WNDCLASS wc;
@@ -57,14 +62,14 @@ Win32_Platform* win32_init_window(HINSTANCE h_instance)
     RECT wr;
 	wr.left = 0;
 	wr.right = WNDWIDTH;
-	wr.top = 0;
-	wr.bottom = WNDHEIGHT;
+	wr.top = WNDHEIGHT;
+	wr.bottom = 0;
 	AdjustWindowRect(&wr, WS_OVERLAPPED, FALSE);
 
     platform.hwnd = CreateWindowA("FrameClass", "Role3DGame",
                   WS_OVERLAPPEDWINDOW,
                   0, 0,
-                  wr.right - wr.left, wr.bottom - wr.top,
+                  wr.right - wr.left, wr.top - wr.bottom,
                   NULL, NULL,
                   h_instance,
                   NULL);

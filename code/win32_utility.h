@@ -59,6 +59,7 @@ void win32_init_gl_context();
 bool win32_process_messages();
 Texture load_bmp(const char* filename, bool is_tilesheet);
 Input* get_input();
+bool* get_app_running();
 Quad setup_quad();
 
 #endif

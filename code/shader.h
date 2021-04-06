@@ -11,6 +11,7 @@ struct Shader
     uint32_t world_location;
     uint32_t texture_location;
     uint32_t has_color;
+    uint32_t immune_location;
     uint32_t color_location;
 };
 

@@ -21,6 +21,7 @@ struct Camera
 };
 
 void setup_renderer();
+void set_immune_shader_filter(int value);
 void add_texture(std::string id, const char* texture_filepath, bool is_tilesheet);
 Texture* get_texture(std::string id);
 std::vector<uint32_t> load_tilesheet(std::string id, int num_cols, int num_rows, int size);

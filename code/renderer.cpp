@@ -27,10 +27,17 @@ void setup_renderer()
     shaders.main_shader.world_location = glGetUniformLocation(shaders.main_shader.ID, "model");
     shaders.main_shader.has_color = glGetUniformLocation(shaders.main_shader.ID, "has_color");
     shaders.main_shader.color_location = glGetUniformLocation(shaders.main_shader.ID, "color");
+    shaders.main_shader.immune_location = glGetUniformLocation(shaders.main_shader.ID, "immune");
+    glUniform1i(shaders.main_shader.immune_location, 0);
 
     rect_texture = setup_quad();
     glBindVertexArray(rect_texture.vao);
     glActiveTexture(GL_TEXTURE0);
+}
+
+void set_immune_shader_filter(int value)
+{
+    glUniform1i(shaders.main_shader.immune_location, value);
 }
 
 Camera* get_camera()
