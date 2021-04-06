@@ -157,6 +157,8 @@ void play_state_restart()
 {
     world.life = 5;
     set_immune_shader_filter(0);
+    world.tile_map  = {0.0f, 0.0f};
+    world.pos = {2.0f * world.tile_size.x, 2.0f * world.tile_size.y}; 
     for(int i = 0; i < world.num_enemy; i++)
     {
         Enemy* enemy = &world.enemies[i];

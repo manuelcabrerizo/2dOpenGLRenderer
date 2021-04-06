@@ -22,6 +22,7 @@ void menu_state_update(float delta_time, Game_State* state)
         if(main_menu.option_selected == 1)
         {
             play_state_restart();
+            main_menu.option_selected = 0;
             *state = PLAY_STATE;
         }
         
