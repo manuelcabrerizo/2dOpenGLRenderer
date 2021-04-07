@@ -66,7 +66,7 @@ uint32_t tile_map00[144] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 5, 0, 0, 4, 1, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
 
 uint32_t tile_map01[144] = {
@@ -78,7 +78,7 @@ uint32_t tile_map01[144] = {
     1, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
 
 uint32_t tile_map10[144] = {
@@ -90,7 +90,7 @@ uint32_t tile_map10[144] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1
 };
 
 uint32_t tile_map11[144] = {
@@ -102,7 +102,7 @@ uint32_t tile_map11[144] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1
 };
 
 global_variable int player_speed = 200;
@@ -170,6 +170,7 @@ void initialize_enemies(World* world)
 void play_state_start(Game_State* state)
 {
     play_state = GAMEPLAYSTATE;
+    add_texture("casa", "./data/casa.bmp", false);
     add_texture("princess", "./data/princess.bmp", false);
     add_texture("die-here", "./data/die-here.bmp", false);
     add_texture("pinches", "./data/pinches.bmp", false);
@@ -217,6 +218,11 @@ void play_state_start(Game_State* state)
     world.death_tilemap_x = 0;
     world.death_tilemap_y = 0;
 
+    world.finish_zone.x = 11 * 80;
+    world.finish_zone.y = 2 * 80;
+    world.finish_tilemap_x = 0;
+    world.finish_tilemap_y = 0;
+
     world.kill_tilemap_x = 0;
     world.kill_tilemap_y = 0;
     world.killing_machine.x = 8 * 80;
@@ -233,12 +239,16 @@ void play_state_start(Game_State* state)
     world.princess.x = 7 * 80;
     world.princess.y = 4 * 80;
 
-
     initialize_enemies(&world);
 }
 
 void play_state_restart()
 {
+    world.finish_zone.x = 11 * 80;
+    world.finish_zone.y = 2 * 80;
+    world.finish_tilemap_x = 0;
+    world.finish_tilemap_y = 0;
+
     world.follow_player = false;
     world.princess_tilemap_x = 1;
     world.princess_tilemap_y = 0;
@@ -711,6 +721,16 @@ void play_state_update(float delta_time, Game_State* state)
             } 
         }
 
+        if(world.princess_tilemap_x == world.finish_tilemap_x &&
+           world.princess_tilemap_y == world.finish_tilemap_y)
+        {
+            if(aabb_colition_check(world.finish_zone.x, world.finish_zone.y, 48 * 4, 32 * 4,
+                                   world.princess.x, world.princess.y, 64, 64))
+            {
+                *state = MENU_STATE; 
+            }
+        }
+
     
         if(world.death_tilemap_x == world.tile_map.x && world.death_tilemap_y == world.tile_map.y && world.player_state == ALIVE)
         {
@@ -795,6 +815,11 @@ void play_state_render()
         {
             draw_rect_texture(world.princess.x, world.princess.y, 64, 64, "princess");
         }
+        if(world.finish_tilemap_x == world.tile_map.x &&
+           world.finish_tilemap_y == world.tile_map.y)
+        {
+            draw_rect_texture(world.finish_zone.x, world.finish_zone.y, 48 * 4, 32 * 4, "casa");
+        }
 
         int tile_texture = 35;
         for(int y = 0; y < world.map.tile_count_y; y++)
@@ -813,7 +838,6 @@ void play_state_render()
                         draw_rect_texture(world.death_position.x, world.death_position.y, 64, 64, "death");
                     }
                 }
-
                 if(tiles)
                 {
                     tile_texture = tiles[(y*world.map.tile_count_x)+x];

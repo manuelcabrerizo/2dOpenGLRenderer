@@ -63,6 +63,10 @@ struct World
     uint32_t tile_map_count_y = 2;
     Enemy* enemies;
     int num_enemy;
+
+    Vec2 finish_zone;
+    int finish_tilemap_x;
+    int finish_tilemap_y;
     
     Vec2 death_position;
     int death_tilemap_x;
