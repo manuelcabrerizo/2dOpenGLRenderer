@@ -5,14 +5,16 @@ std::vector<uint32_t> mago_aminations;
 std::vector<uint32_t> tile_map_textures;
 std::vector<uint32_t> fireball_textures;
 std::vector<uint32_t> spell_textures;
+std::vector<uint32_t> mago_dead_animations;
+Play_States play_state;
 
 uint32_t tile_map00_textures[144] = {
     21, 21, 21, 21, 21, 21, 21, 24, 26, 21, 21, 21, 21, 21, 21, 21,
     21, 18, 19, 19, 19, 20, 21, 24, 26, 21, 18, 19, 19, 19, 20, 21,
-    21, 24, 25, 25, 25, 26, 21, 24, 26, 21, 24, 25, 25, 25, 26, 21,
-    21, 30, 31, 25, 31, 32, 21, 24, 26, 21, 24, 25, 25, 25, 26, 21,
-    21, 21, 21, 25, 21, 21, 21, 24, 26, 21, 24, 25, 25, 25, 25, 25,
-    21, 18, 19, 25, 19, 19, 19, 34, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 24, 25, 25, 25, 25, 25, 25, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 30, 31, 31, 31, 32, 21, 24, 26, 21, 24, 25, 25, 25, 26, 21,
+    21, 21, 21, 21, 21, 21, 21, 24, 26, 21, 24, 25, 25, 25, 25, 25,
+    21, 18, 19, 19, 19, 19, 19, 34, 26, 21, 24, 25, 25, 25, 26, 21,
     21, 24, 25, 25, 25, 25, 25, 25, 26, 21, 24, 25, 25, 25, 26, 21,
     21, 30, 31, 31, 31, 31, 31, 31, 32, 21, 30, 31, 31, 31, 32, 21,
     21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21
@@ -56,14 +58,14 @@ uint32_t tile_map11_textures[144] = {
 
 
 uint32_t tile_map00[144] = {
-    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 0, 3, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 5, 0, 0, 4, 1, 0, 0, 0, 0, 0, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 
@@ -167,6 +169,12 @@ void initialize_enemies(World* world)
 
 void play_state_start(Game_State* state)
 {
+    play_state = GAMEPLAYSTATE;
+    add_texture("princess", "./data/princess.bmp", false);
+    add_texture("die-here", "./data/die-here.bmp", false);
+    add_texture("pinches", "./data/pinches.bmp", false);
+    add_texture("death", "./data/deaht.bmp", false);
+    add_texture("death-dialog", "./data/death_dialog.bmp", false);
     add_texture("life", "./data/life.bmp", false);
     add_texture("enemy", "./data/enemy.bmp", false);
     add_texture("enemy-damage", "./data/enemy_damage.bmp", false);
@@ -179,6 +187,8 @@ void play_state_start(Game_State* state)
     mago_aminations = load_tilesheet("mago", 6, 5, 16);
     add_texture("map", "./data/new_tilesheet.bmp", true);
     tile_map_textures = load_tilesheet("map", 6, 6, 16);
+    add_texture("mago-dead", "./data/mago-dead.bmp", true);
+    mago_dead_animations = load_tilesheet("mago-dead", 6, 5, 16);
 
     world.map.tiles[0] = tile_map00;
     world.map.tiles[1] = tile_map01;
@@ -190,6 +200,7 @@ void play_state_start(Game_State* state)
     world.map.tiles_textures[2] = tile_map10_textures;
     world.map.tiles_textures[3] = tile_map11_textures;
 
+    world.player_state = ALIVE;
     world.tile_size = {80.0f, 80.0f};
     world.tile_map  = {0.0f, 0.0f};
     world.pos       = {2.0f * world.tile_size.x, 2.0f * world.tile_size.y};  
@@ -203,12 +214,48 @@ void play_state_start(Game_State* state)
     world.fireball.speed = 500;
     world.fireball.animation = spell_animation;
     world.fireball.should_render = false;
+    world.death_tilemap_x = 0;
+    world.death_tilemap_y = 0;
+
+    world.kill_tilemap_x = 0;
+    world.kill_tilemap_y = 0;
+    world.killing_machine.x = 8 * 80;
+    world.killing_machine.y = 7 * 80;
+
+    world.start_tilemap_x = 0;
+    world.start_tilemap_y = 0;
+    world.start_kill.x = 5 * 80;
+    world.start_kill.y = 7 * 80;
+
+    world.follow_player = false;
+    world.princess_tilemap_x = 1;
+    world.princess_tilemap_y = 0;
+    world.princess.x = 7 * 80;
+    world.princess.y = 4 * 80;
+
 
     initialize_enemies(&world);
 }
 
 void play_state_restart()
 {
+    world.follow_player = false;
+    world.princess_tilemap_x = 1;
+    world.princess_tilemap_y = 0;
+    world.princess.x = 7 * 80;
+    world.princess.y = 4 * 80;
+
+    world.player_state = ALIVE;
+    world.kill_tilemap_x = 0;
+    world.kill_tilemap_y = 0;
+    world.killing_machine.x = 8 * 80;
+    world.killing_machine.y = 7 * 80;
+
+    world.start_tilemap_x = 0;
+    world.start_tilemap_y = 0;
+    world.start_kill.x = 5 * 80;
+    world.start_kill.y = 7 * 80;
+
     world.life = 5;
     set_immune_shader_filter(0);
     world.tile_map  = {0.0f, 0.0f};
@@ -438,223 +485,341 @@ void shoot_spell(Fireball* fireball, Vec2 player_pos, Vec2 player_dir)
 
 void play_state_update(float delta_time, Game_State* state)
 {
-    animation.num_frames = 1;
-    Vec2 player_new_position = world.pos;
+    if(play_state == GAMEPLAYSTATE)
+    {
+        animation.num_frames = 1;
+        Vec2 player_new_position = world.pos;
 
-    Input* input = get_input();
-    bool up    = key_down('W',      input);
-    bool down  = key_down('S',      input);
-    bool left  = key_down('A',      input);
-    bool right = key_down('D',      input);
-    bool space = key_down(VK_SPACE, input);
-    bool colitions = key_down('P', input);
+        Input* input = get_input();
+        bool up    = key_down('W',      input);
+        bool down  = key_down('S',      input);
+        bool left  = key_down('A',      input);
+        bool right = key_down('D',      input);
+        bool space = key_down(VK_SPACE, input);
+        bool colitions = key_down('P', input);
     
-    static bool colitions_was_press = false; 
-    if(colitions && show_collitions == false && colitions_was_press == false)
-    {
-        show_collitions = true;
-        colitions_was_press = true;
-    }
-    else if(colitions && show_collitions == true && colitions_was_press == false)
-    {
-        show_collitions = false;
-        colitions_was_press = true;
-    }
-    if(keys_up('P', input))
-    {
-        colitions_was_press = false;
-    }
-
-    if(up && !left && !right && !down)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(90));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 0;
-        animation.num_frames = 6;
-    }
-    else if(down && !left && !right && !up)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(270));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 1;
-        animation.num_frames = 6;
-    }
-    else if(left && !up && !down && !right)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(180));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 3;
-        animation.num_frames = 6;
-    }
-    else if(right && !up && !down && !left)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(0));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 2;
-        animation.num_frames = 6;
-    }
-    else if(right && up && !left && !down)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(45));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 2;
-        animation.num_frames = 6;
-    }
-    else if(left && up && !right && !down)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(135));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 3;
-        animation.num_frames = 6; 
-    }
-    else if(right && down && !left && !up)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(315));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 2;
-        animation.num_frames = 6; 
-    }
-    else if(left && down && !right && !up)
-    {
-        Vec2 new_dir = vec2_rotate(world.dir, to_radiant(225));
-        player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
-        animation.row = 3;
-        animation.num_frames = 6;
-    } 
-
-    Vec2 spell_dir;
-    if(animation.row == 0)
-    {
-        spell_dir = {0.0f, 1.0f};
-    }
-    if(animation.row == 1)
-    {
-        spell_dir = {0.0f, -1.0f};
-    }
-    if(animation.row == 2)
-    {
-        spell_dir = {1.0f, 0.0f};
-    }
-    if(animation.row == 3)
-    {
-        spell_dir = {-1.0f, 0.0f};
-    }
-    if(space)
-    {
-        shoot_spell(&world.fireball, world.pos, spell_dir);
-    }
-
-    if(check_world_tile_empty_test(world, player_new_position.x + 0.4f*player_size, player_new_position.y) &&
-       check_world_tile_empty_test(world, player_new_position.x + 0.6f*player_size, player_new_position.y) &&
-       check_world_tile_empty_test(world, player_new_position.x + 0.4f*player_size, player_new_position.y + 0.6*player_size) &&
-       check_world_tile_empty_test(world, player_new_position.x + 0.6f*player_size, player_new_position.y + 0.6*player_size))
-    {
-        world.pos = player_new_position;
-    }
-
-    world.tile.x = (int32_t)floorf((world.pos.x + (player_size/2.0f)) / world.tile_size.x);
-    world.tile.y = (int32_t)floorf((world.pos.y + (player_size/2.0f)) / world.tile_size.y);
-
-    if(world.tile.x < 0)
-    {
-        world.tile_map.x -= 1.0f;
-        world.pos.x += world.map.tile_count_x * world.tile_size.x; 
-    }
-    if(world.tile.x >= world.map.tile_count_x)
-    {
-        world.tile_map.x += 1.0f;
-        world.pos.x -= world.map.tile_count_x * world.tile_size.x;
-    }
-    if(world.tile.y < 0)
-    {
-        world.tile_map.y += 1.0f;
-        world.pos.y += world.map.tile_count_y * world.tile_size.y; 
-    }
-    if(world.tile.y >= world.map.tile_count_y)
-    {
-        world.tile_map.y -= 1.0f;
-        world.pos.y -= world.map.tile_count_y * world.tile_size.y;
-    }
-
-    // handle animations
-    static float time = 0;
-    time += delta_time;
-    animation.col = (int)((int)(time * animation.speed) % animation.num_frames);
-    
-    // handle enemies
-    for(int i = 0; i < world.num_enemy; i++)
-    {
-        Enemy* enemy = &world.enemies[i];
-        if(enemy->tile_map_x == world.tile_map.x && enemy->tile_map_y == world.tile_map.y)
-        {   if(enemy->life > 0)   
-                process_enemy_fireball(enemy, &world, time, delta_time);
-        }
-    }
-    static float immune_timer = 0.0f;
-    if(world.immune == true)
-    {
-        immune_timer += delta_time;
-        if(immune_timer > 2.0f)
+        static bool colitions_was_press = false; 
+        if(colitions && show_collitions == false && colitions_was_press == false)
         {
-            set_immune_shader_filter(0);
-            world.immune = false;
-            immune_timer = 0.0f;
+            show_collitions = true;
+            colitions_was_press = true;
+        }
+        else if(colitions && show_collitions == true && colitions_was_press == false)
+        {
+            show_collitions = false;
+            colitions_was_press = true;
+        }
+        if(keys_up('P', input))
+        {
+            colitions_was_press = false;
+        }
+
+        if(up && !left && !right && !down)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(90));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 0;
+            animation.num_frames = 6;
+        }
+        else if(down && !left && !right && !up)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(270));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 1;
+            animation.num_frames = 6;
+        }
+        else if(left && !up && !down && !right)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(180));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 3;
+            animation.num_frames = 6;
+        }
+        else if(right && !up && !down && !left)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(0));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 2;
+            animation.num_frames = 6;
+        }
+        else if(right && up && !left && !down)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(45));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 2;
+            animation.num_frames = 6;
+        }
+        else if(left && up && !right && !down)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(135));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 3;
+            animation.num_frames = 6; 
+        }
+        else if(right && down && !left && !up)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(315));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 2;
+            animation.num_frames = 6; 
+        }
+        else if(left && down && !right && !up)
+        {
+            Vec2 new_dir = vec2_rotate(world.dir, to_radiant(225));
+            player_new_position = player_new_position + (new_dir * player_speed) * delta_time;
+            animation.row = 3;
+            animation.num_frames = 6;
+        } 
+
+        Vec2 spell_dir;
+        if(animation.row == 0)
+        {
+            spell_dir = {0.0f, 1.0f};
+        }
+        if(animation.row == 1)
+        {
+            spell_dir = {0.0f, -1.0f};
+        }
+        if(animation.row == 2)
+        {
+            spell_dir = {1.0f, 0.0f};
+        }
+        if(animation.row == 3)
+        {
+            spell_dir = {-1.0f, 0.0f};
+        }
+        if(space)
+        {
+            shoot_spell(&world.fireball, world.pos, spell_dir);
+        }
+
+        if(check_world_tile_empty_test(world, player_new_position.x + 0.4f*player_size, player_new_position.y) &&
+           check_world_tile_empty_test(world, player_new_position.x + 0.6f*player_size, player_new_position.y) &&
+           check_world_tile_empty_test(world, player_new_position.x + 0.4f*player_size, player_new_position.y + 0.6*player_size) &&
+           check_world_tile_empty_test(world, player_new_position.x + 0.6f*player_size, player_new_position.y + 0.6*player_size))
+        {
+            world.pos = player_new_position;
+        }
+
+        world.tile.x = (int32_t)floorf((world.pos.x + (player_size/2.0f)) / world.tile_size.x);
+        world.tile.y = (int32_t)floorf((world.pos.y + (player_size/2.0f)) / world.tile_size.y);
+
+        if(world.tile.x < 0)
+        {
+            world.tile_map.x -= 1.0f;
+            world.pos.x += world.map.tile_count_x * world.tile_size.x;
+            if(world.follow_player)
+                world.princess.x += world.map.tile_count_x * world.tile_size.x;
+        }
+        if(world.tile.x >= world.map.tile_count_x)
+        {
+            world.tile_map.x += 1.0f;
+            world.pos.x -= world.map.tile_count_x * world.tile_size.x;
+            if(world.follow_player)
+                world.princess.x -= world.map.tile_count_x * world.tile_size.x;
+
+        }
+        if(world.tile.y < 0)
+        {
+            world.tile_map.y += 1.0f;
+            world.pos.y += world.map.tile_count_y * world.tile_size.y;
+            if(world.follow_player)
+                world.princess.y += world.map.tile_count_y * world.tile_size.y;
+        }
+        if(world.tile.y >= world.map.tile_count_y)
+        {
+            world.tile_map.y -= 1.0f;
+            world.pos.y -= world.map.tile_count_y * world.tile_size.y;
+            if(world.follow_player)
+                world.princess.y -= world.map.tile_count_y * world.tile_size.y;
+        }
+
+        // handle animations
+        static float time = 0;
+        time += delta_time;
+        animation.col = (int)((int)(time * animation.speed) % animation.num_frames);
+    
+        // handle enemies
+        for(int i = 0; i < world.num_enemy; i++)
+        {
+            Enemy* enemy = &world.enemies[i];
+            if(enemy->tile_map_x == world.tile_map.x && enemy->tile_map_y == world.tile_map.y)
+            {       if(enemy->life > 0)   
+                    process_enemy_fireball(enemy, &world, time, delta_time);
+            }
+        }
+        static float immune_timer = 0.0f;
+        if(world.immune == true)
+        {
+            immune_timer += delta_time;
+            if(immune_timer > 2.0f)
+            {
+                set_immune_shader_filter(0);
+                world.immune = false;
+                immune_timer = 0.0f;
+            }
+        }
+        process_player_spell(&world.fireball, world.pos, time, delta_time);
+
+        if(world.life == 0)
+        {
+            *state = DEATH_STATE;
+        }
+
+
+        if(world.kill_tilemap_x == world.tile_map.x &&
+           world.kill_tilemap_y == world.tile_map.y && 
+           world.start_tilemap_x == world.tile_map.x &&
+           world.start_tilemap_y == world.tile_map.y)
+        {
+            if(aabb_colition_check(world.pos.x, world.pos.y, 64, 64,
+                                   world.start_kill.x, world.start_kill.y, 64, 64) &&
+                !aabb_colition_check(world.killing_machine.x, world.killing_machine.y, 64, 64,
+                                   world.start_kill.x, world.start_kill.y, 2, 64))
+            {
+                Vec2 kill_machine_direction = {-1.0f, 0.0f};
+                world.killing_machine = world.killing_machine + ((kill_machine_direction * 300) * delta_time);
+            }
+
+            if(aabb_colition_check(world.pos.x, world.pos.y, 64, 64,
+                                   world.killing_machine.x, world.killing_machine.y, 64, 64) && 
+               aabb_colition_check(world.pos.x, world.pos.y, 64, 64,
+                                   world.start_kill.x, world.start_kill.y, 64, 64))
+            {
+                world.player_state = DEAD;
+            }
+        }
+
+        if(world.princess_tilemap_x == world.tile_map.x &&
+           world.princess_tilemap_y == world.tile_map.y)
+        {
+            if(aabb_colition_check(world.pos.x, world.pos.y, 64, 64,
+                                   world.princess.x, world.princess.y, 64, 64) && world.follow_player == false)
+            {
+                world.follow_player = true; 
+            }
+        }
+
+        if(world.follow_player)
+        {
+            world.princess_tilemap_x = world.tile_map.x;
+            world.princess_tilemap_y = world.tile_map.y;
+            if(vec2_length(world.pos - world.princess) <= 256)
+            {
+                Vec2 princes_dir = normaliza_vec2(world.pos - world.princess);
+                world.princess = world.princess + ((princes_dir * 150) * delta_time);
+            } 
+        }
+
+    
+        if(world.death_tilemap_x == world.tile_map.x && world.death_tilemap_y == world.tile_map.y && world.player_state == ALIVE)
+        {
+            //draw_rect_texture(world.death_position.x - 80, world.death_position.y, 160, 40, "collition");
+            if(aabb_colition_check(world.pos.x, world.pos.y, 64, 64,
+                                   world.death_position.x - 80, world.death_position.y, 160, 40))
+            {
+                play_state = TALKINGSTATE;      
+            }
         }
     }
-    process_player_spell(&world.fireball, world.pos, time, delta_time);
-
-    if(world.life == 0)
+    else if(play_state == TALKINGSTATE)
     {
-        *state = DEATH_STATE;
+        Input* input = get_input();
+        if(key_down(VK_RETURN, input))
+        {
+            world.pos.y += 5.0f;
+            play_state = GAMEPLAYSTATE;
+        } 
     }
 }
 
 void play_state_render()
 {
-    for(int life_index = 0; life_index < world.life; life_index++)
-    {
-        draw_rect_texture(0 + (life_index * 64), WNDHEIGHT - 104, 64, 64, "life");
-    }
-
-    for(int i = 0; i < world.num_enemy; i++)
-    {
-        if((uint32_t)world.tile_map.x == world.enemies[i].tile_map_x &&
-           (uint32_t)world.tile_map.y == world.enemies[i].tile_map_y)
-        {
-            if(world.enemies[i].life > 0)
-            {
-                draw_tilesheet_tile(world.enemies[i].fireball.position.x,
-                                    world.enemies[i].fireball.position.y,
-                                    48, 48,
-                                    fireball_textures[(world.enemies[i].fireball.animation.row * 6) + world.enemies[i].fireball.animation.col]);
-                draw_rect_texture(world.enemies[i].position.x, world.enemies[i].position.y, 64, 64, world.enemies[i].text_id);
-            }
-        }
-    }
-
-    if(world.fireball.should_render == true)
-    {
-        draw_tilesheet_tile(world.fireball.position.x, 
-                            world.fireball.position.y,
-                            48, 48, 
-                            spell_textures[(world.fireball.animation.row * 6) + world.fireball.animation.col]);
+    if(play_state == TALKINGSTATE)
+    {   
+        draw_rect_texture(0, 0, (256+ 64) * 4, 64 * 4, "death-dialog");
     }
     
-    draw_tilesheet_tile(world.pos.x, world.pos.y, (int)player_size, (int)player_size,
-                        mago_aminations[(animation.row * 6) + animation.col]);
-
-    int tile_texture = 35;
-    for(int y = 0; y < world.map.tile_count_y; y++)
+    if(play_state == GAMEPLAYSTATE || play_state == TALKINGSTATE)
     {
-        for(int x = 0; x < world.map.tile_count_x; x++)
+        for(int life_index = 0; life_index < world.life; life_index++)
         {
-            uint32_t* tiles = get_tiles_texture(world, (uint32_t)world.tile_map.x, (uint32_t)world.tile_map.y);
-            if(tiles)
+            draw_rect_texture(0 + (life_index * 64), WNDHEIGHT - 104, 64, 64, "life");
+        }
+
+        for(int i = 0; i < world.num_enemy; i++)
+        {
+            if((uint32_t)world.tile_map.x == world.enemies[i].tile_map_x &&
+               (uint32_t)world.tile_map.y == world.enemies[i].tile_map_y)
             {
-                tile_texture = tiles[(y*world.map.tile_count_x)+x];
-                draw_tilesheet_tile(x * world.tile_size.x, y * world.tile_size.y, world.tile_size.x, world.tile_size.y, tile_map_textures[tile_texture]);
+                if(world.enemies[i].life > 0)
+                {
+                    draw_tilesheet_tile(world.enemies[i].fireball.position.x,
+                                        world.enemies[i].fireball.position.y,
+                                        48, 48,
+                                        fireball_textures[(world.enemies[i].fireball.animation.row * 6) + world.enemies[i].fireball.animation.col]);
+                    draw_rect_texture(world.enemies[i].position.x, world.enemies[i].position.y, 64, 64, world.enemies[i].text_id);
+                }
+            }
+        }
+
+        if(world.fireball.should_render == true)
+        {
+            draw_tilesheet_tile(world.fireball.position.x, 
+                                world.fireball.position.y,
+                                48, 48, 
+                                spell_textures[(world.fireball.animation.row * 6) + world.fireball.animation.col]);
+        }
+    
+        if(world.player_state == ALIVE)
+        {
+            draw_tilesheet_tile(world.pos.x, world.pos.y, (int)player_size, (int)player_size,
+                                mago_aminations[(animation.row * 6) + animation.col]); 
+        }
+        else
+        {
+            draw_tilesheet_tile(world.pos.x, world.pos.y, (int)player_size, (int)player_size,
+                                mago_dead_animations[(animation.row * 6) + animation.col]);
+        }
+
+        if(world.kill_tilemap_x == world.tile_map.x &&
+           world.kill_tilemap_y == world.tile_map.y && 
+           world.start_tilemap_x == world.tile_map.x &&
+           world.start_tilemap_y == world.tile_map.y)
+        {
+            draw_rect_texture(world.killing_machine.x, world.killing_machine.y, 64, 64, "pinches"); 
+            draw_rect_texture(world.start_kill.x, world.start_kill.y, 64, 128, "die-here");
+        }
+        if(world.princess_tilemap_x == world.tile_map.x &&
+           world.princess_tilemap_y == world.tile_map.y)
+        {
+            draw_rect_texture(world.princess.x, world.princess.y, 64, 64, "princess");
+        }
+
+        int tile_texture = 35;
+        for(int y = 0; y < world.map.tile_count_y; y++)
+        {
+            for(int x = 0; x < world.map.tile_count_x; x++)
+            {
+                uint32_t* tiles = get_tiles_texture(world, (uint32_t)world.tile_map.x, (uint32_t)world.tile_map.y);
+                uint32_t* tiles_value = get_tiles(world, (uint32_t)world.tile_map.x, (uint32_t)world.tile_map.y);
+
+                if(tiles_value)
+                {
+                    if(tiles_value[(y*world.map.tile_count_x)+x] == 3)
+                    {
+                        world.death_position.x = x * world.tile_size.x;
+                        world.death_position.y = y * world.tile_size.y;
+                        draw_rect_texture(world.death_position.x, world.death_position.y, 64, 64, "death");
+                    }
+                }
+
+                if(tiles)
+                {
+                    tile_texture = tiles[(y*world.map.tile_count_x)+x];
+                    draw_tilesheet_tile(x * world.tile_size.x, y * world.tile_size.y, world.tile_size.x, world.tile_size.y, tile_map_textures[tile_texture]);
+                }
             }
         }
     }
-
 }

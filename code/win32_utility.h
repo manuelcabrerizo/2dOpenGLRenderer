@@ -15,7 +15,7 @@
 //#define WNDHEIGHT 1080
 
 #define WNDWIDTH 1280
-#define WNDHEIGHT 720
+#define WNDHEIGHT 760
 
 struct Win32_Platform
 {

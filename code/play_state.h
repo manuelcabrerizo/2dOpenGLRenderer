@@ -3,6 +3,18 @@
 
 #include "./win32_app.h"
 
+enum Play_States
+{
+    GAMEPLAYSTATE,
+    TALKINGSTATE,
+};
+
+enum Player_State
+{
+    ALIVE,
+    DEAD
+};
+
 struct Fireball
 {
     Vec2 start_position;
@@ -37,6 +49,7 @@ struct Tile_Map
 
 struct World
 {
+    Player_State player_state;
     Tile_Map map;
     Vec2 tile_map;
     Vec2 tile;
@@ -50,6 +63,24 @@ struct World
     uint32_t tile_map_count_y = 2;
     Enemy* enemies;
     int num_enemy;
+    
+    Vec2 death_position;
+    int death_tilemap_x;
+    int death_tilemap_y;
+
+    Vec2 killing_machine;
+    int kill_tilemap_x;
+    int kill_tilemap_y;
+
+    Vec2 start_kill;
+    int start_tilemap_x;
+    int start_tilemap_y;
+
+    bool follow_player;
+    Vec2 princess;
+    int princess_tilemap_x;
+    int princess_tilemap_y;
+
 };
 
 void play_state_start(Game_State* state);
