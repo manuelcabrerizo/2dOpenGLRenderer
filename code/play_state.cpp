@@ -799,7 +799,7 @@ void play_state_update(float delta_time, Game_State* state)
             if(aabb_colition_check(world.finish_zone.x, world.finish_zone.y, 48 * 4, 32 * 4,
                                    world.princess.x, world.princess.y, 64, 64))
             {
-                *state = MENU_STATE; 
+                *state = VICTORY_STATE; 
             }
         }
 

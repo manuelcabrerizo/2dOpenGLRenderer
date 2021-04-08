@@ -15,7 +15,8 @@ enum Game_State
     INIT_STATE,
     MENU_STATE,
     PLAY_STATE,
-    DEATH_STATE
+    DEATH_STATE,
+    VICTORY_STATE
 };
 
 struct Animation
