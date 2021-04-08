@@ -25,7 +25,7 @@ uint32_t tile_map01_textures[144] = {
     21, 18, 19, 19, 19, 19, 19, 25, 25, 19, 19, 19, 19, 19, 20, 21,
     21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
     21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
-    25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
+    22, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
     21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
     21, 24, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 26, 21,
     21, 30, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 32, 21,
@@ -37,7 +37,7 @@ uint32_t tile_map10_textures[144] = {
     3,  0,  1,  1,  1,  1,  1, 1, 1,  1,  1,  1,  1,  1,  2, 3,
     3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
     3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
-    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  7, 7,
+    3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  7, 22,
     3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
     3,  6,  7,  7,  7,  7,  7, 7, 7,  7,  7,  7,  7,  7,  8, 3,
     3, 12, 13, 13, 13, 13, 13, 7, 7, 13, 13, 13, 13, 13, 14, 3,
@@ -53,7 +53,7 @@ uint32_t tile_map11_textures[144] = {
     3,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
     3,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  8, 3,
     3, 12, 13, 13, 13, 13, 13,  7,  7, 13, 13, 13, 13, 13, 14, 3,
-    3,  3,  3,  3,  3,  3,  3,  7,  7,  3,  3,  3,  3,  3,  3, 3
+    3,  3,  3,  3,  3,  3,  3, 22, 22,  3,  3,  3,  3,  3,  3, 3
 };
 
 
@@ -74,7 +74,7 @@ uint32_t tile_map01[144] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
-    0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -86,7 +86,7 @@ uint32_t tile_map10[144] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0,
+    1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -102,7 +102,7 @@ uint32_t tile_map11[144] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
 
 global_variable int player_speed = 200;
@@ -169,13 +169,21 @@ void initialize_enemies(World* world)
 
 void play_state_start(Game_State* state)
 {
+
+    world.test_sound = Mix_LoadWAV("./data/sounds/Shoot.wav");
+    world.open_sound = Mix_LoadWAV("./data/sounds/Open.wav");
+    world.princess_sound = Mix_LoadWAV("./data/sounds/Princess.wav");
+    world.hit_sound = Mix_LoadWAV("./data/sounds/Hit.wav");
+    world.fireball_sound = Mix_LoadWAV("./data/sounds/Fireballs.wav");
+
+
     play_state = GAMEPLAYSTATE;
     add_texture("casa", "./data/casa.bmp", false);
     add_texture("princess", "./data/princess.bmp", false);
     add_texture("die-here", "./data/die-here.bmp", false);
     add_texture("pinches", "./data/pinches.bmp", false);
     add_texture("death", "./data/deaht.bmp", false);
-    add_texture("death-dialog", "./data/death_dialog.bmp", false);
+    add_texture("death-dialog", "./data/dialog_death_final.bmp", false);
     add_texture("life", "./data/life.bmp", false);
     add_texture("enemy", "./data/enemy.bmp", false);
     add_texture("enemy-damage", "./data/enemy_damage.bmp", false);
@@ -201,6 +209,10 @@ void play_state_start(Game_State* state)
     world.map.tiles_textures[2] = tile_map10_textures;
     world.map.tiles_textures[3] = tile_map11_textures;
 
+    world.enemy_killed = 0;
+    world.map.door_0_open = false;
+    world.map.door_1_open = false;
+    world.map.door_2_open = false;
     world.player_state = ALIVE;
     world.tile_size = {80.0f, 80.0f};
     world.tile_map  = {0.0f, 0.0f};
@@ -242,8 +254,33 @@ void play_state_start(Game_State* state)
     initialize_enemies(&world);
 }
 
+void open_door(World* world, int tilemap_x, int tilemap_y, int x, int y, int texture)
+{
+    if((tilemap_x >= 0) && (tilemap_x < world->tile_map_count_x) &&
+       (tilemap_y >= 0) && (tilemap_y < world->tile_map_count_y))
+    {
+        world->map.tiles_textures[(tilemap_y * world->tile_map_count_x) + tilemap_x][(y * world->map.tile_count_x) + x] = texture;
+        world->map.tiles[(tilemap_y * world->tile_map_count_x) + tilemap_x][(y * world->map.tile_count_x) + x] = 0;
+    }
+}
+
+void close_door(World* world, int tilemap_x, int tilemap_y, int x, int y, int texture)
+{
+    if((tilemap_x >= 0) && (tilemap_x < world->tile_map_count_x) &&
+       (tilemap_y >= 0) && (tilemap_y < world->tile_map_count_y))
+    {
+        world->map.tiles_textures[(tilemap_y * world->tile_map_count_x) + tilemap_x][(y * world->map.tile_count_x) + x] = texture;
+        world->map.tiles[(tilemap_y * world->tile_map_count_x) + tilemap_x][(y * world->map.tile_count_x) + x] = 1;
+    }
+}
+
 void play_state_restart()
 {
+    world.enemy_killed = 0;
+    world.map.door_0_open = false;
+    world.map.door_1_open = false;
+    world.map.door_2_open = false;
+
     world.finish_zone.x = 11 * 80;
     world.finish_zone.y = 2 * 80;
     world.finish_tilemap_x = 0;
@@ -281,7 +318,11 @@ void play_state_restart()
         enemy->fireball.position = enemy->position;
         enemy->fireball.direction     = {1.0f, 1.0f};
     }
-}
+        close_door(&world, 0, 1, 15, 4, 22);
+        close_door(&world, 1, 1,  7, 8, 22);
+        close_door(&world, 1, 1,  8, 8, 22);
+        close_door(&world, 1, 0,  0, 4, 22); 
+    }
 
 bool aabb_colition_check(float x0, float y0, float width0, float height0,
                          float x1, float y1, float width1, float height1)
@@ -377,7 +418,8 @@ void process_enemy_fireball(Enemy* enemy, World* world, float time, float delta_
     float fireball_distane = absf(vec2_length(enemy->fireball.position - enemy->position)); 
     if(fireball_distane == 0)
     {
-        enemy->fireball.direction = normaliza_vec2(world->pos - enemy->position); 
+        enemy->fireball.direction = normaliza_vec2(world->pos - enemy->position);
+        Mix_PlayChannel(-1, world->fireball_sound, 0); 
     }
     if(fireball_distane > 1280)
     {
@@ -420,6 +462,7 @@ void process_enemy_fireball(Enemy* enemy, World* world, float time, float delta_
     {
         if(world->life > 0)
             world->life--;
+        Mix_PlayChannel(-1, world->open_sound, 0);
         set_immune_shader_filter(1);
         world->immune = true;
     }
@@ -438,6 +481,7 @@ void process_enemy_fireball(Enemy* enemy, World* world, float time, float delta_
         if(aabb_colition_check(world->fireball.position.x + 8, world->fireball.position.y + 8, 32, 32,
                                enemy->position.x, enemy->position.y, 48, 48))
         {
+            Mix_PlayChannel(-1, world->hit_sound, 0);
             enemy->life--;
             enemy->text_id = "enemy-damage";
             enemy->start_timer = true;
@@ -470,6 +514,7 @@ void shoot_spell(Fireball* fireball, Vec2 player_pos, Vec2 player_dir)
 {
     if(absf(vec2_length(fireball->start_position - fireball->position)) > 300)
     {
+        Mix_PlayChannel(-1, world.test_sound, 0);
         fireball->start_position = player_pos;
         fireball->direction = player_dir;
         fireball->position = player_pos;
@@ -650,6 +695,7 @@ void play_state_update(float delta_time, Game_State* state)
         animation.col = (int)((int)(time * animation.speed) % animation.num_frames);
     
         // handle enemies
+        int actual_death_enemies = 0;
         for(int i = 0; i < world.num_enemy; i++)
         {
             Enemy* enemy = &world.enemies[i];
@@ -657,7 +703,32 @@ void play_state_update(float delta_time, Game_State* state)
             {       if(enemy->life > 0)   
                     process_enemy_fireball(enemy, &world, time, delta_time);
             }
+            if(enemy->life <= 0)
+            {
+                actual_death_enemies++;
+            }
         }
+        world.enemy_killed = actual_death_enemies;
+        if(world.enemy_killed >= 6 && world.map.door_0_open == false)
+        {
+            world.map.door_0_open = true;
+            open_door(&world, (int)world.tile_map.x, (int)world.tile_map.y, 15, 4, 7);
+        }
+        if(world.enemy_killed >= 12 && world.map.door_1_open == false)
+        {
+            world.map.door_1_open = true; 
+            open_door(&world, (int)world.tile_map.x, (int)world.tile_map.y, 7, 8, 7);
+            open_door(&world, (int)world.tile_map.x, (int)world.tile_map.y, 8, 8, 7);
+
+        }
+        if(world.enemy_killed >= 22 && world.map.door_2_open == false)
+        {
+            world.map.door_2_open = true;
+            open_door(&world, (int)world.tile_map.x, (int)world.tile_map.y, 0, 4, 25); 
+        }
+
+
+
         static float immune_timer = 0.0f;
         if(world.immune == true)
         {
@@ -706,6 +777,7 @@ void play_state_update(float delta_time, Game_State* state)
             if(aabb_colition_check(world.pos.x, world.pos.y, 64, 64,
                                    world.princess.x, world.princess.y, 64, 64) && world.follow_player == false)
             {
+                Mix_PlayChannel(-1, world.princess_sound, 0);
                 world.follow_player = true; 
             }
         }

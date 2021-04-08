@@ -3,11 +3,21 @@
 #include "win32_app.h"
 #include "renderer.h"
 
+#include <SDL.h>
+#include <SDL_mixer.h>
+#define SDL_MAIN_HANDLED
+
 int WinMain(HINSTANCE h_instance,
             HINSTANCE h_prev_instance,
             LPSTR     lp_cmd_line,
             int       n_cmd_show)
 {
+    
+    SDL_Init(SDL_INIT_AUDIO);
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        return 1;
+    }
 
     Win32_Platform* platform = win32_init_window(h_instance);
     LARGE_INTEGER perfCountFrequency;
@@ -53,6 +63,10 @@ int WinMain(HINSTANCE h_instance,
     {
         return 1;
     }
+
+    Mix_Quit();
+    SDL_Quit();
+
     return 0;
 }
 

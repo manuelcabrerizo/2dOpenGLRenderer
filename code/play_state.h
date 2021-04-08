@@ -44,12 +44,16 @@ struct Tile_Map
     uint32_t tile_count_y = 9;
     uint32_t* tiles[4];
     uint32_t* tiles_textures[4];
+    bool door_0_open;
+    bool door_1_open;
+    bool door_2_open;
 };
 
 
 struct World
 {
     Player_State player_state;
+    int enemy_killed;
     Tile_Map map;
     Vec2 tile_map;
     Vec2 tile;
@@ -84,6 +88,13 @@ struct World
     Vec2 princess;
     int princess_tilemap_x;
     int princess_tilemap_y;
+
+    Mix_Chunk* test_sound;
+    Mix_Chunk* open_sound;
+    Mix_Chunk* princess_sound;
+    Mix_Chunk* hit_sound;
+    Mix_Chunk* fireball_sound;
+
 
 };
 

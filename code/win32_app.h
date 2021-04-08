@@ -1,6 +1,8 @@
 #ifndef WIN32APP_H
 #define WIN32APP_H
 
+#include <SDL_mixer.h>
+
 #include <stdint.h>
 #include <windows.h>
 #include "win32_input.h"
@@ -18,7 +20,7 @@ enum Game_State
 
 struct Animation
 {
-    int row = 4;
+    int row = 3;
     int col = 0;
     int num_frames = 6;
     float speed = 20.0f;
