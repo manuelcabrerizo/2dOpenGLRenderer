@@ -7,7 +7,12 @@ SET LIBS=gdi32.lib kernel32.lib user32.lib Winmm.lib opengl32.lib glu32.lib strm
 IF NOT EXIST build mkdir build
 
 pushd build
-cl /EHsc /Zi ..\code\*.cpp ..\code\glad.c /Fe:game ^
+REM DEBUG
+REM cl /EHsc /Zi ..\code\*.cpp ..\code\glad.c /Fe:game ^
+REM /I%INCLUDE_PATH% /link /LIBPATH:%LIB_PATH% %LIBS%
+
+REM RELEASE
+cl /EHsc /O2 ..\code\*.cpp ..\code\glad.c /Fe:game ^
 /I%INCLUDE_PATH% /link /LIBPATH:%LIB_PATH% %LIBS%
 popd
 
